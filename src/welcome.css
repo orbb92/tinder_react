@@ -1,0 +1,32 @@
+/* .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: 40px;
+    z-index: -1;
+}
+
+.container span{
+    display: block;
+}
+
+.text1 {
+    letter-spacing: 20px;
+    animation: text 2s 1;
+    position: relative;
+    font-size: 70px;
+    font-weight: bold;
+ 
+}
+
+.text2 {} */
+
+@keyframes text {
+    0% {
+        margin-bottom: -4vh;
+    }
+    30% {letter-spacing: 8vh;
+        margin-bottom: -4vh;}
+}
