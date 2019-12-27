@@ -11,9 +11,10 @@ const TinderButtons = (props) => {
             <button onClick={()=>{
                  props.PropertySet(props.num);
                 props.history.push('/match/'+props.num)
+                
               sound.src="https://www.myinstants.com/media/sounds/fail-sound-effect.mp3"
               sound.play();
-              
+
               
             }} style={{borderRadius:'80%',backgroundImage:'url(http://www.pngmart.com/files/10/Dislike-PNG-Transparent-Image.png)',width:'10vh',height:'8vh',backgroundSize:'cover'}}></button>
             </div>

@@ -15,8 +15,7 @@ const sound=()=>{
 beep.play()
 }
 
-const TinderSidebar = () => {
-   
+const TinderSidebar = (props) => {
     return (
         
         <Navbar  style={{backgroundImage:"linear-gradient(white,pink,white)"}} expand="sm">
@@ -26,7 +25,7 @@ const TinderSidebar = () => {
                 <Nav className="mr-auto">
                     <NavLink onClick={sound} style={myStyle} activeStyle={{ fontWeight: 'bold' }} exact to="/">Home</NavLink>
                     <NavLink onClick={sound} style={myStyle} activeStyle={{ fontWeight: 'bold' }} to="/profile">Profile</NavLink>
-                    <NavLink onClick={sound} style={myStyle} activeStyle={{ fontWeight: 'bold' }} to="/match/0">Find Match</NavLink>
+                    <NavLink onClick={sound} style={myStyle} activeStyle={{ fontWeight: 'bold' }} to={"/match/"+props.num}>Find Match</NavLink>
 
                     <NavLink  onClick={sound}style={myStyle} activeStyle={{ fontWeight: 'bold' }} to="/likes/0">My likes</NavLink>
 
