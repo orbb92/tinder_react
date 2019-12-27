@@ -69,7 +69,7 @@ class TinderHome extends Component {
     }
 
     myAdjustments = (e) => {
-        
+       this.num1=0;
         this.setState({
             myLikes: [],
             Filter: e,
