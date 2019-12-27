@@ -1,29 +1,25 @@
 import React from 'react'
 import UserComponent from './UserComponent'
-import ReactTrans from 'react-addons-css-transition-group'
 
-const TinderLikes=(params)=> {
-    return (
-      <div className='container' style={{height:'70vh'}}>
-      <div className='row'>
+
+const TinderLikes = (params) => {
+  return (
+    <div className='container' style={{ height: '70vh' }}>
       
-   {/* <ReactTrans
-   transitionName="fade"
-   transitionEnterTimeout={300}
-   transitionLeaveTimeout={300}> */}
-       {params.myLikes.map(item=>{return(
-         <div key={item.id} className='col-4' >
-           <UserComponent item={item}></UserComponent>
-         </div>
-       )})}
-      {/* // </ReactTrans> */}
-     
-     
-      </div>
-
-  </div>
-    )
+{params.myLikes===null  ?
+<div style={{fontSize:"2rem",position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)"}}>You have no likes!</div>
+      :<div className='row'>
+      {params.myLikes.map(item => {
+        return (
+          <div key={item.id} className='col-4' >
+            <UserComponent item={item}></UserComponent>
+          </div>
+        )
+      })}
+    </div>
+          }
+    </div>
+  )
 }
 export default TinderLikes;
 
- 

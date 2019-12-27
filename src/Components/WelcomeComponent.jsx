@@ -9,7 +9,7 @@ export default function WelcomeComponent() {
 
 
 
-        <div className="container" style={{position:"absolute",top:"40%",left:"50%",transform:"translate(-50%,-50%)",display:"block",fontSize:"5vh",zIndex:"1",backgroundColor:"red",borderRadius:"1vh",boxShadow:"10px 5px grey"}} >
+        <div className="container" style={{position:"absolute",top:"40%",left:"50%",transform:"translate(-50%,-50%)",display:"block",fontSize:"5vh",zIndex:"1",backgroundImage:"linear-gradient(to right,white,red,pink,white)",borderRadius:"1vh",boxShadow:"10px 5px grey "}} >
             <div className='row'>
                 <div className="col">
                 <span className="text1" style={{display:"block",letterSpacing:"2vh",animation:"text 2s 1",position:"relative",fontSize:"10vh",fontWeight:"bold"}}>Welcome</span>

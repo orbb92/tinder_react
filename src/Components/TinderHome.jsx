@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //import { appUsers } from '../appUsers'
-import User from '../appUserClass'
+import {Users,Premium} from '../appUserClass'
 import TinderProfile from './TinderProfile'
 import TinderMatch from './TinderMatch'
 import TinderLikes from './TinderLikes'
@@ -29,7 +29,7 @@ class TinderHome extends Component {
                 (result) => {
                     // console.log(result);
                     this.setState({
-                        Users: result.map(item => new User(item.Id, item.Username, item.Age, item.Distance, item.Gender, item.Job, item.Img))
+                        Users: result.map(item => item.Premium===true? new Premium(item.Id, item.Username, item.Age, item.Distance, item.Gender, item.Job, item.Img,item.Premium,item.Hobbies):new Users(item.Id, item.Username, item.Age, item.Distance, item.Gender, item.Job, item.Img,item.Premium))
 
                     })
 
@@ -40,8 +40,9 @@ class TinderHome extends Component {
     }
 
     componentDidMount() {
-        // console.log("first");
-        this.apiUrl = 'http://proj.ruppin.ac.il/igroup10/Mobile/server/api/user';
+       
+        this.apiUrl = 'http://proj.ruppin.ac.il/igroup10/Mobile/server/api/tinderuser'
+        //'';
         this.FetchGetUsers();
 
 
@@ -55,10 +56,13 @@ class TinderHome extends Component {
 
         this.state = {
 
-            Users: [],// appUsers.map(item => new User(item.id, item.name, item.age, item.distance, item.job, item.image)),
+            Users: [],
+            myLikes: null,
+            Filter: [],
+            Property: [""],
             adjustedUsers: [],
-            myLikes: [],
-            Filter: []
+           
+
 
         };
 
@@ -68,14 +72,37 @@ class TinderHome extends Component {
         this.setState({
             myLikes: [],
             Filter: e,
-            adjustedUsers: this.state.Users.filter(item => item.distance > e.minDis && item.distance < e.maxDis && item.age > e.minAge && item.age > e.minAge && item.gender === e.gender)
+            adjustedUsers: this.state.Users.filter(item => item.distance > e.minDis && item.distance < e.maxDis && item.age > e.minAge && item.age > e.minAge && item.gender === e.gender),
+            
+            Property: (this.state.Users.filter(item => item.distance > e.minDis && item.distance < e.maxDis && item.age > e.minAge && item.age > e.minAge && item.gender === e.gender))[0]
+
+
 
         })
 
+
+
     }
 
+    
+
+    PropertySet = (num) => {
+       
+      console.log("im set")
+      if(num<this.state.adjustedUsers.length)
+        this.setState({
+            Property:this.state.adjustedUsers[num]
+            
+        })
+    }
+
+
+
+
+
     addLiked = (item) => {
-        console.log("im item", item)
+    
+       
         const user = {
             Username: item.name,
             Gender: item.gender,
@@ -87,13 +114,7 @@ class TinderHome extends Component {
 
         };
         console.log("im user", user)
-        // axios.post(this.apiUrl,user)
-        // .then(response=>{
-        //     console.log(response)
-        // })
-        // .catch(error=>{
-        //     console.log(error)
-        // })
+
 
         fetch(this.apiUrl, {
             method: 'POST',
@@ -111,7 +132,7 @@ class TinderHome extends Component {
             .then(
                 (result) => {
                     console.log("fetch POST= ", result);
-                    console.log(result.Avg);
+                    
                 },
                 (error) => {
                     console.log("err post=", error);
@@ -127,15 +148,19 @@ class TinderHome extends Component {
 
 
     render() {
-        console.log("Im fetch", this.state.Users)
-        console.log("im filter", this.state.Filter)
+        
+
+
+        
 
         return (
+
             <Router>
+                {console.log(this.state.Filter)}
                 <div className='row' style={{}}>
 
                     <div style={{ width: '100%' }}>
-                        <TinderSidebar></TinderSidebar>
+                        <TinderSidebar ></TinderSidebar>
                     </div>
                     <Route path='/' exact strict>
                         {<Welcome></Welcome>}
@@ -145,20 +170,16 @@ class TinderHome extends Component {
                             {<TinderProfile Adj={this.state.Filter} Adjustments={this.myAdjustments}></TinderProfile>}
                         </Route>
                     </div>
-                    {/* <Route path='/match' exact>
-                        <div className='col-12'>{<TinderMatch adjustedUsers={this.state.adjustedUsers}></TinderMatch>}</div>
-                    </Route> */}
+                   
                     <div className='col-12'>
                         <Route path='/match/:index' exact strict
-                            render={({ match }) => (<TinderMatch index={match.params.index} Users={this.state.adjustedUsers} addLiked={this.addLiked} />)}>
+                            render={({ match }) => (<TinderMatch index={match.params.index} Users={this.state.adjustedUsers} addLiked={this.addLiked} Property={this.state.Property} PropertySet={this.PropertySet} />)}>
 
 
                         </Route>
                     </div>
                     <div className='col-12'>
-                        {/* <Route path='/likes' exact strict component={TinderLikes}>
-                       {<TinderLikes></TinderLikes>}
-                    </Route> */}
+                       
                         <Route path='/likes/:index' exact strict
                             render={({ match }) => (<TinderLikes index={match.params.index} myLikes={this.state.myLikes} />)}>
 
